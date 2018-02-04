@@ -1,46 +1,51 @@
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+var mongoose = require("mongoose"),
+  Schema = mongoose.Schema
 
-var userSchema = new Schema({
-  username: { type: String, index: true},
-  password: { type: String, index: false}
-},
-{
-  timestamps: {
-    createdAt: 'create_at',
-    updatedAt: 'update_at'
+var userSchema = new Schema(
+  {
+    username: { type: String, index: true },
+    password: { type: String, index: false }
+  },
+  {
+    timestamps: {
+      createdAt: "create_at",
+      updatedAt: "update_at"
+    }
   }
-}
 )
 
-var User = mongoose.model('user', userSchema)
+var User = mongoose.model("user", userSchema)
 
 var postSchema = new Schema({
   title: String,
   body: String,
   postedBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'user'
+    ref: "user"
   },
-  
+
   comments: [
     {
       postedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: "user"
       },
       body: String,
       date: Date
     }
   ],
 
-  date: { type: Date, default: Date.now},
-
+  date: { type: Date, default: Date.now }
 })
 
-var Post = mongoose.model('post', postSchema)
+var Post = mongoose.model("post", postSchema)
 
-mongoose.connect('mongodb://127.0.0.1/curso-vuejs2')
+mongoose.connect(
+  "mongodb://jospinat:123456@ds123718.mlab.com:23718/app-vuejs2",
+  {
+    useMongoClient: true
+  }
+)
 
 module.exports = {
   User: User,
